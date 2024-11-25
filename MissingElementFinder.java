@@ -1,44 +1,39 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
+import java.util.logging.Logger;
 
 public class MissingElementFinder {
 
+    private static final Logger logger = Logger.getLogger(MissingElementFinder.class.getName());
+
     public static void main(String[] args) {
-        // Rastgele 100 adet sayı üretmek için Random sınıfını kullanıyoruz
-        Random random = new Random();
+        Set<Integer> originalNumbers = generateRandomNumbers();
+        Set<Integer> copiedNumbers = new HashSet<>(originalNumbers);
 
-        // Orijinal listeyi oluşturuyoruz
-        List<Integer> originalList = new ArrayList<>();
-        while (originalList.size() < 100) {
-            int randomNumber = random.nextInt(100) + 1; // 1 ile 100 arasında rastgele sayı üret
-            if (!originalList.contains(randomNumber)) {
-                originalList.add(randomNumber);
-            }
-        }
+        // Rastgele bir sayı seç ve kopya listeden sil
+        int randomNumber = new Random().nextInt(100);
+        logger.info("Random sayı: " + randomNumber);
+        copiedNumbers.remove(randomNumber);
 
-        // Orijinal listenin bir kopyasını oluşturuyoruz
-        List<Integer> copyList = new ArrayList<>(originalList);
-
-        // 0 ile 100 arasında rastgele bir sayı üretip kopya listeden siliniyor
-        int randomIndex = random.nextInt(100);
-        copyList.remove(randomIndex);
-
-        // Eksik elemanı bulan metodu çağırıyoruz
-        int missingElement = findMissingElement(originalList, copyList);
-
-        // Eksik elemanı ekrana yazdırıyoruz
-        System.out.println("Eksik Eleman: " + missingElement);
+        // Eksik sayıyı bul ve yazdır
+        logger.info("Eksik Sayı: " + findMissingElement(originalNumbers, copiedNumbers));
     }
 
-    // Eksik elemanı bulan metot
-    public static int findMissingElement(List<Integer> originalList, List<Integer> copyList) {
-        // Orijinal listede olup kopya listede olmayan sayıyı buluyoruz
-        for (int number : originalList) {
-            if (!copyList.contains(number)) {
-                return number; // Eksik sayıyı döndürüyoruz
+    private static Set<Integer> generateRandomNumbers() {
+        Set<Integer> numbers = new HashSet<>();
+        while (numbers.size() < 100) {
+            numbers.add(new Random().nextInt(100) + 1);
+        }
+        return numbers;
+    }
+
+    private static int findMissingElement(Set<Integer> original, Set<Integer> copied) {
+        for (int num : original) {
+            if (!copied.contains(num)) {
+                return num;
             }
         }
-        return -1; // Eğer eksik bir sayı yoksa -1 döndürüyoruz
+        throw new RuntimeException("Eksik sayı bulunamadı!");
     }
 }
