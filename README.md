@@ -74,8 +74,6 @@ Bu tür bir README dosyası, projenizin amacını, kullanımını ve fonksiyonla
 
 ## MissingElementFinder
 
-![Görsel 1](src/images/1.png)
-![Görsel 2](src/images/2.png)
-![Görsel 3](src/images/1.png)
-
-[Product 2](src/example/missingelementfinder/images/2.png)
+![Görsel 1](src/example/missingelementfinder/images/1.png)
+![Görsel 2](src/example/missingelementfinder/images/2.png)
+![Görsel 3](src/example/missingelementfinder/images/3.png)
